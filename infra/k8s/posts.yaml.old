@@ -1,0 +1,10 @@
+# we don't usually create pods manually like this via config files, we usually create pods via Deployments
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: posts
+spec:
+  containers:
+    - name: posts
+      image: jpwaves/posts:0.0.1
+      imagePullPolicy: Never

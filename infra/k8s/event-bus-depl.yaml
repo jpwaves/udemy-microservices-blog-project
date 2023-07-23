@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: event-bus-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: event-bus
+  template:
+    metadata:
+      labels:
+        app: event-bus
+    spec:
+      containers:
+        - name: event-bus
+          image: jpwaves/event-bus
+--- # need these dashes to let k8s know we are starting on a new object below
+apiVersion: v1
+kind: Service
+metadata:
+  name: event-bus-srv
+spec:
+  selector:
+    app: event-bus
+  type: ClusterIP # by default the type is ClusterIP so this isn't necessary
+  ports:  
+    - name: event-bus
+      protocol: TCP
+      port: 4005
+      targetPort: 4005
